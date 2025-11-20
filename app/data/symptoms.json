@@ -1,0 +1,84 @@
+{
+  "symptoms": [
+    {
+      "id": "lethargy",
+      "name": "Lethargy/Weakness",
+      "category": "behavioral",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "description": "Unusual tiredness, lack of energy, sleeping more than usual",
+      "common_pets": ["dog", "cat", "rabbit", "bird"]
+    },
+    {
+      "id": "vomiting",
+      "name": "Vomiting",
+      "category": "gastrointestinal",
+      "severity_levels": ["occasional", "frequent", "persistent"],
+      "description": "Throwing up food, liquid, or bile",
+      "common_pets": ["dog", "cat"]
+    },
+    {
+      "id": "diarrhea",
+      "name": "Diarrhea",
+      "category": "gastrointestinal",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "description": "Loose or watery stools",
+      "common_pets": ["dog", "cat", "rabbit"]
+    },
+    {
+      "id": "loss_of_appetite",
+      "name": "Loss of Appetite",
+      "category": "behavioral",
+      "severity_levels": ["partial", "complete"],
+      "description": "Not eating normal amounts or refusing food entirely",
+      "common_pets": ["dog", "cat", "bird", "rabbit"]
+    },
+    {
+      "id": "excessive_drinking",
+      "name": "Excessive Drinking",
+      "category": "behavioral",
+      "severity_levels": ["increased", "excessive"],
+      "description": "Drinking much more water than usual",
+      "common_pets": ["dog", "cat"]
+    },
+    {
+      "id": "difficulty_breathing",
+      "name": "Difficulty Breathing",
+      "category": "respiratory",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "description": "Labored breathing, panting excessively, wheezing",
+      "common_pets": ["dog", "cat", "bird"]
+    },
+    {
+      "id": "coughing",
+      "name": "Coughing",
+      "category": "respiratory",
+      "severity_levels": ["occasional", "frequent", "persistent"],
+      "description": "Repetitive coughing, hacking sounds",
+      "common_pets": ["dog", "cat"]
+    },
+    {
+      "id": "limping",
+      "name": "Limping",
+      "category": "mobility",
+      "severity_levels": ["slight", "moderate", "severe"],
+      "description": "Favoring one leg, difficulty walking",
+      "common_pets": ["dog", "cat"]
+    },
+    {
+      "id": "skin_irritation",
+      "name": "Skin Irritation",
+      "category": "dermatological",
+      "severity_levels": ["mild", "moderate", "severe"],
+      "description": "Red, inflamed, or itchy skin",
+      "common_pets": ["dog", "cat", "rabbit"]
+    },
+    {
+      "id": "excessive_scratching",
+      "name": "Excessive Scratching",
+      "category": "behavioral",
+      "severity_levels": ["increased", "constant"],
+      "description": "Scratching more than normal, creating wounds",
+      "common_pets": ["dog", "cat"]
+    }
+  ]
+}

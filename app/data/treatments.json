@@ -1,0 +1,112 @@
+{
+  "treatments": [
+    {
+      "id": "gastroenteritis_treatment",
+      "condition_id": "gastroenteritis",
+      "treatment_type": "home_care",
+      "description": "Supportive care with dietary management",
+      "instructions": [
+        "Withhold food for 12-24 hours",
+        "Provide small amounts of water frequently",
+        "Introduce bland diet (boiled chicken and rice) gradually",
+        "Monitor for dehydration"
+      ],
+      "duration": "2-3 days",
+      "precautions": [
+        "Ensure adequate hydration",
+        "Watch for worsening symptoms"
+      ],
+      "when_to_seek_help": [
+        "Symptoms persist beyond 48 hours",
+        "Signs of dehydration appear",
+        "Blood in vomit or stool"
+      ]
+    },
+    {
+      "id": "kennel_cough_treatment",
+      "condition_id": "kennel_cough",
+      "treatment_type": "vet_visit",
+      "description": "Usually resolves on its own but may need antibiotics",
+      "instructions": [
+        "Isolate from other pets",
+        "Use humidifier to ease breathing",
+        "Encourage rest",
+        "Honey can soothe throat (dogs only, not cats)"
+      ],
+      "duration": "1-2 weeks",
+      "precautions": [
+        "Avoid collar pressure on throat",
+        "Keep away from other dogs"
+      ],
+      "when_to_seek_help": [
+        "Cough worsens or persists beyond 2 weeks",
+        "Difficulty breathing develops",
+        "Loss of appetite continues"
+      ]
+    },
+    {
+      "id": "arthritis_treatment",
+      "condition_id": "arthritis",
+      "treatment_type": "vet_visit",
+      "description": "Long-term management with pain relief and lifestyle changes",
+      "instructions": [
+        "Maintain healthy weight",
+        "Provide comfortable, warm sleeping area",
+        "Gentle, regular exercise",
+        "Consider joint supplements"
+      ],
+      "duration": "Ongoing management",
+      "precautions": [
+        "Avoid overexertion",
+        "Monitor for pain signs"
+      ],
+      "when_to_seek_help": [
+        "Severe limping or inability to walk",
+        "Signs of severe pain",
+        "Significant mobility decline"
+      ]
+    },
+    {
+      "id": "allergic_dermatitis_treatment",
+      "condition_id": "allergic_dermatitis",
+      "treatment_type": "home_care",
+      "description": "Identify and avoid allergens, provide symptomatic relief",
+      "instructions": [
+        "Identify and remove potential allergens",
+        "Use hypoallergenic shampoo",
+        "Apply cool compresses to affected areas",
+        "Prevent scratching with cone if necessary"
+      ],
+      "duration": "Until resolved, typically 1-2 weeks",
+      "precautions": [
+        "Avoid known allergens",
+        "Don't use human products on pets"
+      ],
+      "when_to_seek_help": [
+        "Severe itching persists",
+        "Secondary infections develop",
+        "Symptoms spread or worsen"
+      ]
+    },
+    {
+      "id": "diabetes_treatment",
+      "condition_id": "diabetes",
+      "treatment_type": "emergency",
+      "description": "Requires immediate veterinary diagnosis and ongoing management",
+      "instructions": [
+        "Schedule immediate veterinary appointment",
+        "Monitor water intake and urination",
+        "Do not change diet until vet consultation"
+      ],
+      "duration": "Lifelong management required",
+      "precautions": [
+        "Requires professional diagnosis",
+        "May need insulin therapy"
+      ],
+      "when_to_seek_help": [
+        "Immediately - requires professional diagnosis",
+        "Emergency if pet becomes lethargic or vomits"
+      ]
+    }
+  ]
+}

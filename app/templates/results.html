@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnosis Results - Pet Care Advisor{% endblock %}
+
+{% block content %}
+<div id="resultsContainer">
+    <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading results...</span>
+        </div>
+        <p>Loading your diagnosis results...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const results = JSON.parse(localStorage.getItem('diagnosisResults') || '{}');
+    const diagnosisData = JSON.parse(localStorage.getItem('diagnosisData') || '{}');
+    
+    if (!results || Object.keys(results).length === 0) {
+        document.getElementById('resultsContainer').innerHTML = `
+            <div class="alert alert-warning">
+                <h4>No Results Found</h4>
+                <p>No diagnosis results were found. Please go back and complete the assessment.</p>
+                <a href="/" class="btn btn-primary">Start Over</a>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    
+    // Pet information summary
+    html += `
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h3><i class="fas fa-paw"></i> Diagnosis Results for ${diagnosisData.name || 'Your Pet'}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Species:</strong> ${(diagnosisData.species || 'Unknown').charAt(0).toUpperCase() + (diagnosisData.species || 'unknown').slice(1)}</p>
+                                <p><strong>Age:</strong> ${diagnosisData.age || 'Unknown'} years</p>
+                                ${diagnosisData.breed ? `<p><strong>Breed:</strong> ${diagnosisData.breed}</p>` : ''}
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}</p>
+                                <p><strong>Symptoms Reported:</strong> ${diagnosisData.symptoms ? diagnosisData.symptoms.length : 0}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Emergency alert
+    if (results.emergency) {
+        html += `
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <h4><i class="fas fa-exclamation-triangle"></i> EMERGENCY SITUATION DETECTED</h4>
+                        ${results.alerts ? results.alerts.map(alert => `<p class="mb-1">${alert}</p>`).join('') : ''}
+                        <hr>
+                        <h5>${results.recommendation}</h5>
+                        <p class="mb-0">Please contact your emergency veterinarian or animal hospital immediately.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        // Normal diagnosis results
+        if (results.conditions && results.conditions.length > 0) {
+            html += `
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h4><i class="fas fa-diagnoses"></i> Possible Conditions</h4>
+                            </div>
+                            <div class="card-body">
+            `;
+            
+            results.conditions.forEach((conditionData, index) => {
+                const condition = conditionData.condition;
+                const confidence = Math.round(conditionData.confidence * 100);
+                
+                let confidenceClass = 'success';
+                if (confidence < 60) confidenceClass = 'warning';
+                if (confidence < 40) confidenceClass = 'secondary';
+                
+                html += `
+                    <div class="condition-result mb-3 ${index < results.conditions.length - 1 ? 'border-bottom pb-3' : ''}">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">${condition.name}</h5>
+                            <span class="badge bg-${confidenceClass} fs-6">${confidence}% Confidence</span>
+                        </div>
+                        <p class="text-muted mb-2">${condition.description}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small><strong>Category:</strong> ${condition.category.replace('_', ' ').toUpperCase()}</small><br>
+                                <small><strong>Severity:</strong> ${condition.severity.toUpperCase()}</small>
+                            </div>
+                            <div class="col-md-6">
+                                <small><strong>Emergency Level:</strong> ${condition.emergency_level.toUpperCase()}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Recommendations
+        if (results.recommendations) {
+            const rec = results.recommendations;
+            html += `
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h4><i class="fas fa-prescription"></i> Treatment Recommendations</h4>
+                            </div>
+                            <div class="card-body">
+            `;
+            
+            if (rec.primary_diagnosis) {
+                html += `
+                    <div class="alert alert-info">
+                        <h5>Primary Assessment: ${rec.primary_diagnosis}</h5>
+                        ${rec.confidence ? `<p>Confidence Level: ${Math.round(rec.confidence * 100)}%</p>` : ''}
+                        ${rec.severity ? `<p>Severity: ${rec.severity.toUpperCase()}</p>` : ''}
+                    </div>
+                `;
+            }
+            
+            if (rec.description) {
+                html += `<p><strong>Treatment Approach:</strong> ${rec.description}</p>`;
+            }
+            
+            if (rec.instructions && rec.instructions.length > 0) {
+                html += `
+                    <h5>Care Instructions:</h5>
+                    <ul>
+                        ${rec.instructions.map(instruction => `<li>${instruction}</li>`).join('')}
+                    </ul>
+                `;
+            }
+            
+            if (rec.duration) {
+                html += `<p><strong>Expected Duration:</strong> ${rec.duration}</p>`;
+            }
+            
+            if (rec.precautions && rec.precautions.length > 0) {
+                html += `
+                    <div class="alert alert-warning">
+                        <h6><i class="fas fa-exclamation-circle"></i> Important Precautions:</h6>
+                        <ul class="mb-0">
+                            ${rec.precautions.map(precaution => `<li>${precaution}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (rec.seek_help_if && rec.seek_help_if.length > 0) {
+                html += `
+                    <div class="alert alert-danger">
+                        <h6><i class="fas fa-phone"></i> Seek Veterinary Help If:</h6>
+                        <ul class="mb-0">
+                            ${rec.seek_help_if.map(condition => `<li>${condition}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            html += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    // Pet-specific notes
+    if (results.pet_specific_notes && results.pet_specific_notes.length > 0) {
+        html += `
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h4><i class="fas fa-sticky-note"></i> Important Notes for Your Pet</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                ${results.pet_specific_notes.map(note => `<li>${note}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Follow-up questions
+    if (results.follow_up_questions && results.follow_up_questions.length > 0) {
+        html += `
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <h4><i class="fas fa-question-circle"></i> Additional Questions to Consider</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>These questions may help provide more insight into your pet's condition:</p>
+                            <ul>
+                                ${results.follow_up_questions.map(question => `<li>${question}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    
+    // Action buttons
+    html += `
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="/" class="btn btn-primary me-3">
+                    <i class="fas fa-redo"></i> New Assessment
+                </a>
+                <button onclick="window.print()" class="btn btn-secondary me-3">
+                    <i class="fas fa-print"></i> Print Results
+                </button>
+                <button onclick="shareResults()" class="btn btn-info">
+                    <i class="fas fa-share"></i> Share with Vet
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('resultsContainer').innerHTML = html;
+});
+
+function shareResults() {
+    const results = localStorage.getItem('diagnosisResults');
+    const diagnosisData = localStorage.getItem('diagnosisData');
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Pet Care Advisor Results',
+            text: 'Here are the assessment results for my pet from Pet Care Advisor',
+            url: window.location.href
+        });
+    } else {
+        // Fallback - copy to clipboard
+        const shareText = `Pet Care Advisor Assessment Results\n\n${JSON.stringify(JSON.parse(results), null, 2)}`;
+        navigator.clipboard.writeText(shareText).then(() => {
+            alert('Results copied to clipboard! You can now paste and share with your veterinarian.');
+        });
+    }
+}
+</script>
+{% endblock %}

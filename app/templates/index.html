@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Pet Care Advisor - Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-paw"></i> Welcome to Pet Care Advisor</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Our AI-powered knowledge-based system helps you understand your pet's symptoms and provides care recommendations.</p>
+                
+                
+
+                <form id="petForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Pet's Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="species" class="form-label">Species *</label>
+                            <select class="form-select" id="species" name="species" required>
+                                <option value="">Select species...</option>
+                                <option value="dog">Dog</option>
+                                <option value="cat">Cat</option>
+                                <option value="bird">Bird</option>
+                                <option value="rabbit">Rabbit</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="breed" class="form-label">Breed</label>
+                            <input type="text" class="form-control" id="breed" name="breed" placeholder="Optional">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="age" class="form-label">Age (years) *</label>
+                            <input type="number" class="form-control" id="age" name="age" step="0.1" min="0" max="30" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="weight" class="form-label">Weight (kg)</label>
+                            <input type="number" class="form-control" id="weight" name="weight" step="0.1" min="0" placeholder="Optional">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-select" id="gender" name="gender">
+                                <option value="">Select gender...</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="neutered_male">Neutered Male</option>
+                                <option value="spayed_female">Spayed Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="last_vet_visit" class="form-label">Last Vet Visit</label>
+                            <input type="date" class="form-control" id="last_vet_visit" name="last_vet_visit">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="medical_history" class="form-label">Medical History</label>
+                        <textarea class="form-control" id="medical_history" name="medical_history" rows="2" 
+                                  placeholder="Any known conditions, surgeries, or ongoing health issues..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="current_medications" class="form-label">Current Medications</label>
+                        <textarea class="form-control" id="current_medications" name="current_medications" rows="2" 
+                                  placeholder="List any medications your pet is currently taking..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="allergies" class="form-label">Known Allergies</label>
+                        <textarea class="form-control" id="allergies" name="allergies" rows="2" 
+                                  placeholder="Food allergies, medication reactions, environmental allergens..."></textarea>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-arrow-right"></i> Continue to Symptom Assessment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('petForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Collect form data
+    const formData = new FormData(this);
+    const petData = {};
+    
+    for (let [key, value] of formData.entries()) {
+        if (value.trim() !== '') {
+            petData[key] = value;
+        }
+    }
+    
+    // Store pet data and navigate to symptoms page
+    localStorage.setItem('petData', JSON.stringify(petData));
+    
+    // Build query string for symptoms page
+    const params = new URLSearchParams(petData);
+    window.location.href = `/symptoms?${params.toString()}`;
+});
+</script>
+{% endblock %}

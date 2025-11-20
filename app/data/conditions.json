@@ -1,0 +1,64 @@
+{
+  "conditions": [
+    {
+      "id": "gastroenteritis",
+      "name": "Gastroenteritis",
+      "category": "gastrointestinal",
+      "severity": "moderate",
+      "required_symptoms": ["vomiting", "diarrhea"],
+      "optional_symptoms": ["lethargy", "loss_of_appetite"],
+      "exclusion_symptoms": ["difficulty_breathing"],
+      "confidence_threshold": 0.6,
+      "description": "Inflammation of stomach and intestines, often from dietary indiscretion",
+      "emergency_level": "medium"
+    },
+    {
+      "id": "kennel_cough",
+      "name": "Kennel Cough",
+      "category": "respiratory",
+      "severity": "mild",
+      "required_symptoms": ["coughing"],
+      "optional_symptoms": ["lethargy", "loss_of_appetite"],
+      "exclusion_symptoms": ["difficulty_breathing", "vomiting"],
+      "confidence_threshold": 0.7,
+      "description": "Contagious respiratory infection common in dogs",
+      "emergency_level": "low"
+    },
+    {
+      "id": "arthritis",
+      "name": "Arthritis",
+      "category": "mobility",
+      "severity": "moderate",
+      "required_symptoms": ["limping"],
+      "optional_symptoms": ["lethargy", "loss_of_appetite"],
+      "exclusion_symptoms": [],
+      "confidence_threshold": 0.5,
+      "description": "Joint inflammation common in older pets",
+      "emergency_level": "low"
+    },
+    {
+      "id": "allergic_dermatitis",
+      "name": "Allergic Dermatitis",
+      "category": "dermatological",
+      "severity": "mild",
+      "required_symptoms": ["skin_irritation", "excessive_scratching"],
+      "optional_symptoms": ["lethargy"],
+      "exclusion_symptoms": [],
+      "confidence_threshold": 0.7,
+      "description": "Allergic reaction causing skin inflammation and itching",
+      "emergency_level": "low"
+    },
+    {
+      "id": "diabetes",
+      "name": "Diabetes",
+      "category": "endocrine",
+      "severity": "high",
+      "required_symptoms": ["excessive_drinking", "loss_of_appetite"],
+      "optional_symptoms": ["lethargy", "vomiting"],
+      "exclusion_symptoms": [],
+      "confidence_threshold": 0.6,
+      "description": "Metabolic disorder affecting blood sugar regulation",
+      "emergency_level": "medium"
+    }
+  ]
+}
